@@ -1,3 +1,6 @@
+using MyWorkoutRoutineApp.Infrastructure.Migrations;
+using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,4 +25,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+UpdateDatabase();
+
 app.Run();
+
+// database
+
+void UpdateDatabase()
+{
+    var connectionString = builder.Configuration.GetConnectionString("Connection");
+    var nameDatabase = builder.Configuration.GetConnectionString("NameDatabase");
+
+    Database.CreateDatabase(connectionString, nameDatabase);
+}
